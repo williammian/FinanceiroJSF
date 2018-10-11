@@ -16,7 +16,7 @@
 		<h1>Lançamentos</h1>
 
 		<h:form id="frm">
-			<h:commandButton value="Novo lançamento"/>
+			<h:button value="Novo lançamento" outcome="CadastroLancamento" />
 
 			<h:dataTable var="lancamento" value="#{consultaLancamentoBean.lancamentos}"
 				width="100%" styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
