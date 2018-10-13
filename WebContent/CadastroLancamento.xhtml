@@ -35,8 +35,11 @@
 				</h:selectOneRadio>
 				
 				<h:outputLabel value="Pessoa"/>
-				<h:selectOneMenu>
-					<f:selectItem itemValue="Escola Infantil Abelha Amarela"/>
+				<h:selectOneMenu value="#{cadastroLancamentoBean.lancamento.pessoa}"
+						required="true" label="Pessoa">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroLancamentoBean.pessoas}"
+						var="pessoa" itemValue="#{pessoa}" itemLabel="#{pessoa.nome}"/>
 				</h:selectOneMenu>
 				
 				<h:outputLabel value="Descrição"/>
@@ -58,14 +61,19 @@
 				
 				<h:outputLabel/>
 				<h:panelGroup>
-					<h:selectBooleanCheckbox id="pagoCheckbox" value="#{cadastroLancamentoBean.lancamento.pago}"/>
+					<h:selectBooleanCheckbox id="pagoCheckbox" value="#{cadastroLancamentoBean.lancamento.pago}"
+						immediate="true" valueChangeListener="#{cadastroLancamentoBean.lancamentoPagoModificado}" 
+						onchange="submit();"/>
 					<h:outputLabel value="Conta paga" for="pagoCheckbox"/>
 				</h:panelGroup>
 				
-				<h:outputLabel value="Data de pagamento" />
+				<h:outputLabel value="Data de pagamento" rendered="#{cadastroLancamentoBean.lancamento.pago}"/>
 				<h:inputText size="12" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" 
-						label="Data de pagamento">
+						label="Data de pagamento" rendered="#{cadastroLancamentoBean.lancamento.pago}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
+					<f:validator validatorId="com.wm.RequeridoCondicional"/>
+					<f:validator validatorId="com.wm.DataFutura"/>
+					<f:attribute name="checado" value="#{cadastroLancamentoBean.lancamento.pago}"/>
 				</h:inputText>
 				
 				<h:outputLabel/>
