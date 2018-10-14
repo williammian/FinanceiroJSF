@@ -5,8 +5,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import org.hibernate.Session;
+
 import com.wm.cursojsf2.financeiro.model.Pessoa;
-import com.wm.cursojsf2.financeiro.service.GestaoPessoas;
+import com.wm.cursojsf2.financeiro.util.HibernateUtil;
 
 @FacesConverter(forClass=Pessoa.class)
 public class PessoaConverter implements Converter {
@@ -16,8 +18,11 @@ public class PessoaConverter implements Converter {
 		Pessoa retorno = null;
 		
 		if (value != null) {
-			GestaoPessoas gestaoPessoas = new GestaoPessoas();
-			retorno = gestaoPessoas.buscarPorCodigo(new Integer(value));
+			Session session = HibernateUtil.getSession();
+			
+			retorno = (Pessoa) session.get(Pessoa.class, new Integer(value));
+			
+			session.close();
 		}
 		
 		return retorno;
