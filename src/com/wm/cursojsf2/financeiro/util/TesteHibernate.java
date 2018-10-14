@@ -1,4 +1,4 @@
-package com.wm.cursojsf2.financeiro;
+package com.wm.cursojsf2.financeiro.util;
 
 import java.util.List;
 
@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.wm.cursojsf2.financeiro.model.Pessoa;
-import com.wm.cursojsf2.financeiro.util.HibernateUtil;
 
 public class TesteHibernate {
 	

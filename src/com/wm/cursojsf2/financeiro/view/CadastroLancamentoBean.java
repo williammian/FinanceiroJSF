@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import com.wm.cursojsf2.financeiro.model.Lancamento;
@@ -45,13 +46,13 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		System.out.println("Tipo: " + this.lancamento.getTipo());
-		System.out.println("Pessoa: " + this.lancamento.getPessoa().getNome());
-		System.out.println("Descrição: " + this.lancamento.getDescricao());
-		System.out.println("Valor: " + this.lancamento.getValor());
-		System.out.println("Data vencimento: " + this.lancamento.getDataVencimento());
-		System.out.println("Conta paga: " + this.lancamento.isPago());
-		System.out.println("Data pagamento: " + this.lancamento.getDataPagamento());
+		Session session = HibernateUtil.getSession();
+		Transaction trx = session.beginTransaction();
+		
+		session.merge(this.lancamento);
+		
+		trx.commit();
+		session.close();
 
 		this.lancamento = new Lancamento();
 		
