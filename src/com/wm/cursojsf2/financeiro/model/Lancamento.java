@@ -4,15 +4,41 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Lancamento implements Serializable {
 
+	@Id
+	@GeneratedValue
 	private Integer codigo;
+	
+	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipo;
+	
+	@ManyToOne
+	@JoinColumn(name="codigo_pessoa")
 	private Pessoa pessoa;
+	
 	private String descricao;
+	
 	private BigDecimal valor;
+	
+	@Column(name="data_vencimento")
 	private Date dataVencimento;
+	
 	private boolean pago;
+	
+	@Column(name="data_pagamento")
 	private Date dataPagamento;
 	
 	public Integer getCodigo() {

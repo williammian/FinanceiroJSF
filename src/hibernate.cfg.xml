@@ -13,5 +13,8 @@
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>		
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
+		
+		<mapping class="com.wm.cursojsf2.financeiro.model.Pessoa"/>
+		<mapping class="com.wm.cursojsf2.financeiro.model.Lancamento"/>
 	</session-factory>
 </hibernate-configuration>
