@@ -12,13 +12,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import com.wm.cursojsf2.financeiro.model.Lancamento;
 import com.wm.cursojsf2.financeiro.model.Pessoa;
 import com.wm.cursojsf2.financeiro.model.TipoLancamento;
-import com.wm.cursojsf2.financeiro.util.HibernateUtil;
+import com.wm.cursojsf2.financeiro.util.FacesUtil;
 
 @ManagedBean
 @ViewScoped
@@ -30,13 +29,11 @@ public class CadastroLancamentoBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
-		Session session = HibernateUtil.getSession();
+		Session session = (Session) FacesUtil.getRequestAttribute("session");  
 		
 		this.pessoas = session.createCriteria(Pessoa.class)
 				.addOrder(Order.asc("nome"))
 				.list();
-		
-		session.close();
 	}
 	
 	public void lancamentoPagoModificado(ValueChangeEvent event) {
@@ -46,14 +43,9 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		Session session = HibernateUtil.getSession();
-		Transaction trx = session.beginTransaction();
-		
+		Session session = (Session) FacesUtil.getRequestAttribute("session");
 		session.merge(this.lancamento);
 		
-		trx.commit();
-		session.close();
-
 		this.lancamento = new Lancamento();
 		
 		String msg = "Cadastro efetuado com sucesso!";
