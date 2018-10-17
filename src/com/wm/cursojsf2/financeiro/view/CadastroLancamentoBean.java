@@ -14,8 +14,10 @@ import javax.faces.event.ValueChangeEvent;
 import com.wm.cursojsf2.financeiro.model.Lancamento;
 import com.wm.cursojsf2.financeiro.model.Pessoa;
 import com.wm.cursojsf2.financeiro.model.TipoLancamento;
-import com.wm.cursojsf2.financeiro.repository.Lancamentos;
 import com.wm.cursojsf2.financeiro.repository.Pessoas;
+import com.wm.cursojsf2.financeiro.service.GestaoLancamentos;
+import com.wm.cursojsf2.financeiro.service.RegraNegocioException;
+import com.wm.cursojsf2.financeiro.util.FacesUtil;
 import com.wm.cursojsf2.financeiro.util.Repositorios;
 
 @ManagedBean
@@ -39,14 +41,16 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		Lancamentos lancamentos = this.repositorios.getLancamentos();
-		lancamentos.guardar(this.lancamento);
-		
-		this.lancamento = new Lancamento();
-		
-		String msg = "Cadastro efetuado com sucesso!";
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+		GestaoLancamentos gestaoLancamentos = new GestaoLancamentos(this.repositorios.getLancamentos());
+		try {
+			gestaoLancamentos.salvar(lancamento);
+			
+			this.lancamento = new Lancamento();
+			
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_INFO, "Cadastro efetuado com sucesso!");
+		} catch (RegraNegocioException e) {
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
+		}
 	}
 	
 	public TipoLancamento[] getTiposLancamentos() {
