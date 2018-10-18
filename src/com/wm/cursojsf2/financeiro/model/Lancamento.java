@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Lancamento implements Serializable {
+public class Lancamento implements Serializable, Cloneable {
 
 	@Id
 	@GeneratedValue
@@ -114,4 +114,8 @@ public class Lancamento implements Serializable {
 		return true;
 	}
 	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }
