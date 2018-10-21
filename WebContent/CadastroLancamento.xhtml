@@ -1,21 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-	<f:metadata>
-		<f:viewParam name="codigo" value="#{cadastroLancamentoBean.lancamento}"/>
-	</f:metadata>
 	
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Novo lançamento</title>
+	<ui:define name="titulo">#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</ui:define>
+	
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroLancamentoBean.lancamento}"/>
+		</f:metadata>
 		
-		<h:outputStylesheet library="css" name="sistema.css"/>
-	</h:head>
-	<h:body>
-
 		<h1>#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</h1>
 
 		<h:form id="frm">
@@ -73,7 +68,8 @@
 				
 				<h:outputLabel value="Data de pagamento" rendered="#{cadastroLancamentoBean.lancamento.pago}"/>
 				<h:inputText size="12" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" 
-						label="Data de pagamento" rendered="#{cadastroLancamentoBean.lancamento.pago}">
+						label="Data de pagamento"
+						rendered="#{cadastroLancamentoBean.lancamento.pago}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 					<f:validator validatorId="com.wm.RequeridoCondicional"/>
 					<f:validator validatorId="com.wm.DataFutura"/>
@@ -87,5 +83,6 @@
 			</h:panelGrid>
 			
 		</h:form>
-	</h:body>
-</html>
+	</ui:define>
+	
+</ui:composition>
