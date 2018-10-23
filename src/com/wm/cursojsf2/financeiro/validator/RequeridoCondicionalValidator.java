@@ -8,6 +8,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import com.sun.faces.util.MessageFactory;
+import com.wm.cursojsf2.financeiro.util.FacesUtil;
 
 @FacesValidator("com.wm.RequeridoCondicional")
 public class RequeridoCondicionalValidator implements Validator {
@@ -20,7 +21,7 @@ public class RequeridoCondicionalValidator implements Validator {
 		if (checado != null && checado && value == null) {
 			Object label = MessageFactory.getLabel(context, component);
 			
-			String descricaoErro = "Preencha o campo " + label + ".";
+			String descricaoErro = FacesUtil.getMensagemI18n("fill_the_field") + label + ".";
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					descricaoErro, descricaoErro);
 			throw new ValidatorException(message);
