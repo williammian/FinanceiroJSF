@@ -18,3 +18,5 @@ insert into permissao_usuario values ('joao', 'cadastro');
 insert into permissao_usuario values ('maria', 'consulta');
 insert into permissao_usuario values ('sebastiao', 'cadastro');
 insert into permissao_usuario values ('sebastiao', 'consulta');
+
+update usuario set senha = md5(senha)
